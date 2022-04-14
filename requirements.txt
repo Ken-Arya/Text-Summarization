@@ -1,6 +1,5 @@
 transformers
 numpy
 nltk
-time
 Sastrawi
 sklearn
