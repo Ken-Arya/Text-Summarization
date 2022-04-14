@@ -1,7 +1,3 @@
-import os
-os.system('pip install nltk')
-os.system('pip install sastrawi')
-os.system('pip install sklearn')
 import streamlit as st
 import numpy as np
 import re
