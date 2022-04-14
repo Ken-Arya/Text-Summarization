@@ -1,0 +1,7 @@
+transformers
+numpy
+re
+nltk
+time
+Sastrawi
+sklearn
