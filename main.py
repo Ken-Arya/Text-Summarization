@@ -1,6 +1,8 @@
 import streamlit as st
 import exsum
+import absum
 from exsum import procexsum
+from absum import procabsum
 
 st.set_page_config(
         page_title="2 Text Summarization",
@@ -11,16 +13,17 @@ st.set_page_config(
 st.title('Aplikasi Peringakasan Teks')
 st.write(
     """
-    Halaman web ini dapat meringkas teks menggunakan metode ekstraktif maupun deksriptif.
+    Halaman web ini dapat meringkas teks menggunakan metode ekstraktif maupun abstraktif.
     """
 )
 
 rawtext = st.text_area(label="Masukkan teks yang akan diringkas :", value="", max_chars=None, placeholder="Masukkan teks yang akan diringkas", disabled=False, height=200)
 
 st.spinner(text="In progress...")
-exsummarry = st.button("Extractive Summarization")
+exsummary = st.button("Extractive Summarization")
+absummary = st.button("Abstractive Summarization")
 
-if exsummarry:
+if exsummary:
     exsum.procexsum(rawtext)
 
 if absummary:
