@@ -1,7 +1,2 @@
-numpy
-re
-nltk
-time
-Sastrawi
-sklearn
-transformers
+exsum.py
+absum.py
