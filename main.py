@@ -6,7 +6,7 @@ from exsum import procexsum
 from absum import procabsum
 
 st.set_page_config(
-        page_title="2 Text Summarization",
+        page_title="Text Summarization",
         page_icon="🖥️",
         initial_sidebar_state="expanded"
     )
