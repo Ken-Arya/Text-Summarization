@@ -1,3 +1,4 @@
+# import library yang akan digunakan
 import os
 import streamlit as st
 import numpy as np
@@ -10,81 +11,100 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 nltk.download('stopwords')
 nltk.download('punkt')
 
-def procexsum(rawtext):
-    
-    start_time = time.time()
-    with st.spinner('Please wait, your text is being Cleaned (1/2)'):
-        text = rawtext.replace('\n', '')
-        sentence = re.split('\. |\.',text)
-    st.text("Teks telah dibersihkan selama %.2f detik" % (time.time() - start_time))
-     
+# proses extractive summary yang akan dijalankan dengan metode TF-IDF
 
-    start_time = time.time()
-    with st.spinner('Please wait, your text is being Tokenized'):
+
+def procexsum(rawtext):
+
+    # Teks dibersihkan :
+    #   1. Menghapus Garis baru (new line)
+    #   2.Teks dipecah menjadi per kalimat
+    brs1time = time.time()
+    with st.spinner('Mohon tunggu, teks anda sedang dibersihkan 1/3'):
+        text = rawtext.replace('ss', '')
+        sentence = re.split('\. |\.', text)
+    brs1time = time.time() - brs1time
+
+    # Teks di tokenisasi :
+    #   1. Tokenizer membaca
+    #   2. Ditokenisasi (Dipecah menjadi kata per kata) dan diubah menjadi huruf kecil
+    tkstime = time.time()
+    with st.spinner('Mohon tunggu, teks anda sedang ditokenisasi'):
         tokenizer = nltk.RegexpTokenizer(r"\w+")
         tokenized = [tokenizer.tokenize(s.lower()) for s in sentence]
-    st.text("Teks telah ditokenisasi selama %.2f detik" % (time.time() - start_time))
-     
+    tkstime = time.time() - tkstime
 
-    start_time = time.time()
-    with st.spinner('Please wait, your text is being work on Stopword'):
-        listStopword =  set(stopwords.words('indonesian'))
+    # Teks difilter dengan stopword:
+    #   1. Mengimport Stopword
+    #   2. Memfilter kata yang tidak penting
+    #   3. Kata yang penting disimpan pada array
+    brs2time = time.time()
+    with st.spinner('Mohon tunggu, teks anda sedang dibersihkan 2/3'):
+        listStopword = set(stopwords.words('indonesian'))
 
         important_token = []
         for sent in tokenized:
             filtered = [s for s in sent if s not in listStopword]
             important_token.append(filtered)
-    st.text("Teks telah dilakukan stopword selama %.2f detik" % (time.time() - start_time))
-     
-    
-    start_time = time.time()
-    with st.spinner('Please wait, your text is being Cleaned (2/2)'):
-        sw_removed = [' '.join(t) for t in important_token]
-    st.text("Teks telah dibersihkan selama %.2f detik" % (time.time() - start_time))
-     
+    brs2time = time.time() - brs2time
 
-    start_time = time.time()
-    with st.spinner('Please wait, your text is being Stemmed'):
+    # Teks digabung :
+    #   1. Stopword dihapus
+    #   2. Teks yang penting digabungkan
+    gbgtime = time.time()
+    with st.spinner('Mohon tunggu, teks anda sedang digabungkan kembali'):
+        sw_removed = [' '.join(t) for t in important_token]
+    gbgtime = time.time() - gbgtime
+
+    # Teks distem :
+    #   1. Mengimport Stemmer
+    #   2. Penghilangan imbuhan pada kata
+    stmtime = time.time()
+    with st.spinner('Mohon tunggu, teks anda sedang dibersihkan 3/3'):
         factory = StemmerFactory()
         stemmer = factory.create_stemmer()
 
         stemmed_sent = [stemmer.stem(sent) for sent in sw_removed]
-    st.text("Teks telah distem selama %.2f detik" % (time.time() - start_time))
-     
+    stmtime = time.time() - stmtime
 
-    start_time = time.time()
-    with st.spinner('Please wait, your text is being Vectorized'):
+    # Teks divektorisasi :
+    #   1. Mengimport Vectorizer
+    #   2. Teks diubah menjadi angka agar dapat diproses oleh mesin
+    vkttime = time.time()
+    with st.spinner('Mohon tunggu, teks anda sedang disiapkan untuk diproses'):
         vec = TfidfVectorizer(lowercase=True)
         document = vec.fit_transform(stemmed_sent)
 
         document = document.toarray()
+    vkttime = time.time() - vkttime
 
-        n = 2 
+    # Teks dipilih dan diurutkan
+    #   1. Kalimat dipilih (n) sebagai ringkasan
+    #   2. Kalimat diurutkan
+    urttime = time.time()
+    with st.spinner('Mohon tunggu, teks anda sedang diringkas'):
+
+        n = 2
         result = np.sum(document, axis=1)
-    st.text("Teks telah divektorisasi selama %.2f detik" % (time.time() - start_time))
-     
-
-    start_time = time.time()
-    with st.spinner('Please wait, your text is being Sorted'):
         sorted(result)
 
         top_n = np.argsort(result)[-n:]
-        
-        summ_index = sorted(top_n)
-    st.text("Teks telah disortir selama %.2f detik" % (time.time() - start_time))
-     
 
-    
-    start_time = time.time()
-    with st.spinner('Please wait, your text is being Summarized'):
-        summarized = [] 
+        summ_index = sorted(top_n)
+    urttime = time.time() - urttime
+
+    # Teks diringkas
+    rkstime = time.time()
+    with st.spinner('Mohon tunggu, teks anda sedang disiapkan'):
+        summarized = []
         for i in summ_index:
-            summarized.append(sentence[i]) 
-    st.text("Teks telah diringkas selama %.2f detik" % (time.time() - start_time))
-     
-        
-    st.text_area(label="Teks yang sudah diringkas :", height=200, value=(''.join(map(str, summarized))))
-    st.success('Done!')
+            summarized.append(sentence[i])
+    rkstime = time.time() - rkstime
+    jmlhtime = brs1time + tkstime + brs2time + \
+        gbgtime + stmtime + vkttime + urttime + rkstime
+    st.text_area(label="Teks yang sudah diringkas :", height=200,
+                 value=(''.join(map(str, summarized))))
+    st.success("Teks telah diringkas dengan metode extractive selama %.2f detik" % jmlhtime)
 
     st.title('How it works :')
     with st.expander("1. Input Text"):

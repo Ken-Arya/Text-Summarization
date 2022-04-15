@@ -50,3 +50,6 @@ def procabsum(rawtext):
     with st.expander("1. Input Text"):
         st.text_area(label="Langkah pertama adalah program akan menyimpan teks yang telah anda masukkan ke dalam variabel bernama text. Berikut adalah teks yang anda masukkan :", value=text, height=200)
     st.success('Thats how its done! now you know how it works, congratulations!')
+
+def howabsum():
+    st.text('ini how absum')
