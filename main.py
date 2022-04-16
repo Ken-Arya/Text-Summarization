@@ -28,12 +28,9 @@ with col1:
     )
     panjang = st.slider("Pilih panjang ringkasan dalam skala 1-3 :", 1, 3, 2)
     exsummary = st.button("Extractive Summarization")
-    absummary = st.button(label="Abstractive Summarization", disabled=True)
+    absummary = st.button("Abstractive Summarization", disabled=True)
     st.title("Petunjuk Penggunaan:")
-    with st.expander(
-        "Harap dibaca petunjuk dibawah ini sebelum menggunakan fitur peringkas teks!",
-        expanded=True,
-    ):
+    with st.expander("Petunjuk penggunaan!"):
         st.markdown(meta.CAPTIONS, unsafe_allow_html=True)
 
 with col2:
