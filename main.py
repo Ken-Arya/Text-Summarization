@@ -7,7 +7,7 @@ from exsum import procexsum
 from absum import procabsum
 
 st.set_page_config(
-    page_title="Peringaksan Teks",
+    page_title="Aplikasi Text Summarization",
     page_icon="🖥️",
     initial_sidebar_state="expanded",
     layout="wide",
@@ -26,12 +26,19 @@ with col1:
         disabled=False,
         height=200,
     )
-    panjang = st.slider("Pilih panjang ringkasan dalam skala 1-3 :", 1, 3, 2)
-    exsummary = st.button("Extractive Summarization")
-    absummary = st.button("Abstractive Summarization", disabled=True)
+    panjang = st.slider("Pilih panjang ringkasan dalam skala 1-3 :", 1, 3, 1)
+    exsummary = st.button("Extractive Summarization (Bahasa Indonesia)")
+    absummary = st.button("Abstractive Summarization (English)")
     st.title("Petunjuk Penggunaan:")
-    with st.expander("Petunjuk penggunaan!"):
-        st.markdown(meta.CAPTIONS, unsafe_allow_html=True)
+    with st.expander("Baca petunjuk penggunaan!", expanded=False):
+        st.markdown(meta.PETUNJUKPENGGUNAAN, unsafe_allow_html=True)
+    with st.expander("Apa Itu Text Summarization?", expanded=False):
+        st.markdown(meta.APAITUTEXTSUMMARIZATION, unsafe_allow_html=True)
+    with st.expander(
+        "Apa perbedaan Extractive Summarization dan Abstractive Summarization?",
+        expanded=False,
+    ):
+        st.markdown(meta.PERBEDAANMETODE, unsafe_allow_html=True)
 
 with col2:
     if exsummary:
