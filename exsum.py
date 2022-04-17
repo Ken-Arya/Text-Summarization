@@ -5,6 +5,7 @@ import numpy as np
 import re
 import nltk
 import time
+import pandas
 from nltk.corpus import stopwords
 from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -115,12 +116,82 @@ def procexsum(rawtext, panjang):
         "Teks anda telah diringkas dengan metode extractive selama %.2f detik"
         % jmlhtime
     )
+
     # Bagian Penjelasan Cara Kerja
     st.title("Proses Peringkasan :")
-    with st.expander("1. Input Text"):
+    with st.expander("1. Teks disimpan untuk di proses"):
         st.text_area(
             label="Langkah pertama adalah program akan menyimpan teks yang telah anda masukkan ke dalam variabel bernama text. Berikut adalah teks yang anda masukkan :",
             value=rawtext,
             height=200,
         )
+    with st.expander("2. Teks Dibersihkan (1/2)"):
+        st.text_area(
+            label="Langkah kedua adalah teks dibersihkan dengan cara menghilangkan garis baru atau paragraf. Berikut adalah hasil teks anda yang sudah dihilangkan garis baru atau paragraf nya:",
+            value=text,
+            height=200,
+        )
+        x = len(sentence)
+        y = np.array(sentence)
+        df = pandas.DataFrame({"No.": (1 + i for i in range(x)), "Kalimat": y})
+        style = df.style.hide_index()
+        st.write(
+            """Setelah teks di bersihkan, lalu teks dipecah menjadi per kalimat. Berikut adalah hasil teks anda yang sudah dipecah menjadi %i kalimat:"""
+            % x,
+            style.to_html(),
+            unsafe_allow_html=True,
+        )
+        st.write(
+            """Teks anda dibersihkan dan diubah menjadi kalimat pada proses diatas selama %2f detik.
+        """
+            % brs1time
+        )
+    with st.expander("3. Kalimat diubah menjadi token"):
+        x = len(tokenized)
+        y = np.array(tokenized)
+        df = pandas.DataFrame({"No.": (1 + i for i in range(x)), "Token": y})
+        style = df.style.hide_index()
+        st.write(
+            """Langkah ketiga adalah kalimat yang sudah dibersihkan dan dipecah, diubah menjadi token token atau per kata dengan cara Tokenisasi serta diubah menjadi huruf kecil. Berikut adalah hasil teks anda yang sudah diubah menjadi token:""",
+            style.to_html(),
+            unsafe_allow_html=True,
+        )
+        st.write(
+            """Kalimat anda ditokenisasi pada proses diatas selama %2f detik.
+        """
+            % tkstime
+        )
+
+    with st.expander("4. Token Dibersihkan (2/2)"):
+        x = len(important_token)
+        y = np.array(important_token)
+        df = pandas.DataFrame({"No.": (1 + i for i in range(x)), "Token": y})
+        style = df.style.hide_index()
+        st.write(
+            """Langkah keempat adalah sistem akan membuang token atau kata tidak penting yang ada pada kamus Stopword indonesia dan hanya menyimpan token atau kata penting saja untuk diproses nanti nya. Berikut adalah hasil token yang disimpan:""",
+            style.to_html(),
+            unsafe_allow_html=True,
+        )
+        st.write(
+            """Token anda dibersihkan pada proses diatas selama %2f detik.
+        """
+            % brs2time
+        )
+
+    with st.expander("5. Token Digabungkan"):
+        x = len(sw_removed)
+        y = np.array(sw_removed)
+        df = pandas.DataFrame({"No.": (1 + i for i in range(x)), "Kalimat": y})
+        style = df.style.hide_index()
+        st.write(
+            """Langkah kelima adalah token token yang penting akan digabung kembali menjadi kalimat. Berikut adalah hasil kalimat yang diproses:""",
+            style.to_html(),
+            unsafe_allow_html=True,
+        )
+        st.write(
+            """Token anda digabungkan pada proses diatas selama %2f detik.
+        """
+            % gbgtime
+        )
+
     st.success("Thats how its done! now you know how it works, congratulations!")
