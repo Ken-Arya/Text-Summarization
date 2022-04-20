@@ -12,7 +12,7 @@ HEADER = """Aplikasi Text Summarization"""
 PETUNJUKPENGGUNAAN = """<p>
 Untuk Menggunakan aplikasi diatas, ikuti langkah langkah berikut :
 
-1. Masukkan teks yang akan diringkas pada kolom teks.
+1. Masukkan teks, artikel maupun berita yang akan diringkas pada kolom teks.
 
 2. Pilih panjang ringkasan yang diinginkan dalam skala 1-3:
 

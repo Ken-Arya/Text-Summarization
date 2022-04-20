@@ -72,7 +72,7 @@ def procexsum(rawtext, panjang):
         vec = TfidfVectorizer(lowercase=True)
         document = vec.fit_transform(stemmed_sent)
 
-        document = document.toarray()
+        documents = document.toarray()
         vkttime = time.time() - vkttime
 
         # Teks dipilih dan diurutkan
@@ -81,7 +81,7 @@ def procexsum(rawtext, panjang):
         urttime = time.time()
 
         n = panjang
-        result = np.sum(document, axis=1)
+        result = np.sum(documents, axis=1)
         sorted(result)
 
         top_n = np.argsort(result)[-n:]
@@ -184,7 +184,7 @@ def procexsum(rawtext, panjang):
         df = pandas.DataFrame({"No.": (1 + i for i in range(x)), "Kalimat": y})
         style = df.style.hide_index()
         st.write(
-            """Langkah kelima adalah token token yang penting akan digabung kembali menjadi kalimat. Berikut adalah hasil kalimat yang diproses:""",
+            """Langkah kelima adalah token token yang penting akan digabung kembali menjadi kalimat. Berikut adalah hasil kalimat yang telah diproses:""",
             style.to_html(),
             unsafe_allow_html=True,
         )
@@ -193,5 +193,81 @@ def procexsum(rawtext, panjang):
         """
             % gbgtime
         )
+    with st.expander("6. Menghilangkan imbuhan pada kata"):
+        x = len(stemmed_sent)
+        y = np.array(stemmed_sent)
+        df = pandas.DataFrame({"No.": (1 + i for i in range(x)), "Kalimat": y})
+        style = df.style.hide_index()
+        st.write(
+            """Langkah keenam adalah proses menghilangkan imbuhan pada kata dengan proses Stemming. Berikut adalah hasil kalimat yang telah di proses:""",
+            style.to_html(),
+            unsafe_allow_html=True,
+        )
+        st.write(
+            """Token anda digabungkan pada proses diatas selama %2f detik.
+        """
+            % stmtime
+        )
+    with st.expander("7. Mengubah teks agar dapat di proses"):
+        tokenizer = nltk.RegexpTokenizer(r"\w+")
+        tokenized2 = [tokenizer.tokenize(s.lower()) for s in stemmed_sent]
+        mylist = []
+        for tokendua in tokenized2:
+            for tokenkedua in tokendua:
+                tokke = tokenkedua
+                mylist.append(tokke)
+        mylist
+
+        st.dataframe(data=documents)
+        st.dataframe(data=mylist)
+
+        st.write(
+            """Token anda digabungkan pada proses diatas selama %2f detik.
+        """
+            % vkttime
+        )
 
     st.success("Thats how its done! now you know how it works, congratulations!")
+
+    # st.success("""
+    # gelar
+    # perdana
+    # motogp
+    # mandalika
+    # gp
+    # indonesia
+    # red
+    # bull
+    # ktm
+    # miguel
+    # oliveira
+    # minggu
+    # 20
+    # 3
+    # 2022
+    # tempat
+    # yamaha
+    # podium
+    # tiga
+    # menang
+    # pramac
+    # ducati
+    # johann
+    # zarco
+    # pertamina
+    # grand
+    # prix
+    # of
+    # saji
+    # tegang
+    # fabio
+    # quartararo
+    # balap
+    # pole
+    # position
+    # hasil
+    # tahan
+    # posisi
+    # start
+
+    # """)
