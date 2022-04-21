@@ -67,7 +67,7 @@ def procexsum(rawtext, panjang):
 
         # Teks divektorisasi :
         #   1. Mengimport Vectorizer
-        #   2. Teks diubah menjadi angka agar dapat diproses oleh mesin
+        #   2. Teks diubah menjadi angka serta dihitung bobot nya menggunakan metode TF-IDF
         vkttime = time.time()
         vec = TfidfVectorizer(lowercase=True)
         document = vec.fit_transform(stemmed_sent)
@@ -95,6 +95,7 @@ def procexsum(rawtext, panjang):
         summarized = []
         for i in summ_index:
             summarized.append(sentence[i])
+        ringkasan = "".join(map(str, summarized))
         rkstime = time.time() - rkstime
         jmlhtime = (
             brs1time
@@ -107,9 +108,7 @@ def procexsum(rawtext, panjang):
             + rkstime
         )
         st.text_area(
-            label="Teks yang sudah diringkas:",
-            height=200,
-            value=("".join(map(str, summarized))),
+            label="Teks yang sudah diringkas:", height=200, value=ringkasan, key="main"
         )
     st.success("Sukses!")
     st.text(
@@ -133,7 +132,7 @@ def procexsum(rawtext, panjang):
         )
         x = len(sentence)
         y = np.array(sentence)
-        df = pandas.DataFrame({"No.": (1 + i for i in range(x)), "Kalimat": y})
+        df = pandas.DataFrame({"No.": (i for i in range(x)), "Kalimat": y})
         style = df.style.hide_index()
         st.write(
             """Setelah teks di bersihkan, lalu teks dipecah menjadi per kalimat. Berikut adalah hasil teks anda yang sudah dipecah menjadi %i kalimat:"""
@@ -149,7 +148,7 @@ def procexsum(rawtext, panjang):
     with st.expander("3. Kalimat diubah menjadi token"):
         x = len(tokenized)
         y = np.array(tokenized)
-        df = pandas.DataFrame({"No.": (1 + i for i in range(x)), "Token": y})
+        df = pandas.DataFrame({"No.": (i for i in range(x)), "Token": y})
         style = df.style.hide_index()
         st.write(
             """Langkah ketiga adalah kalimat yang sudah dibersihkan dan dipecah, diubah menjadi token token atau per kata dengan cara Tokenisasi serta diubah menjadi huruf kecil. Berikut adalah hasil teks anda yang sudah diubah menjadi token:""",
@@ -165,10 +164,10 @@ def procexsum(rawtext, panjang):
     with st.expander("4. Token Dibersihkan (2/2)"):
         x = len(important_token)
         y = np.array(important_token)
-        df = pandas.DataFrame({"No.": (1 + i for i in range(x)), "Token": y})
+        df = pandas.DataFrame({"No.": (i for i in range(x)), "Token": y})
         style = df.style.hide_index()
         st.write(
-            """Langkah keempat adalah sistem akan membuang token atau kata tidak penting yang ada pada kamus Stopword indonesia dan hanya menyimpan token atau kata penting saja untuk diproses nanti nya. Berikut adalah hasil token yang disimpan:""",
+            """Langkah keempat adalah program akan membuang token atau kata tidak penting yang ada pada kamus Stopword indonesia dan hanya menyimpan token atau kata penting saja untuk diproses nanti nya. Berikut adalah hasil token yang disimpan:""",
             style.to_html(),
             unsafe_allow_html=True,
         )
@@ -181,7 +180,7 @@ def procexsum(rawtext, panjang):
     with st.expander("5. Token Digabungkan"):
         x = len(sw_removed)
         y = np.array(sw_removed)
-        df = pandas.DataFrame({"No.": (1 + i for i in range(x)), "Kalimat": y})
+        df = pandas.DataFrame({"No.": (i for i in range(x)), "Kalimat": y})
         style = df.style.hide_index()
         st.write(
             """Langkah kelima adalah token token yang penting akan digabung kembali menjadi kalimat. Berikut adalah hasil kalimat yang telah diproses:""",
@@ -196,7 +195,7 @@ def procexsum(rawtext, panjang):
     with st.expander("6. Menghilangkan imbuhan pada kata"):
         x = len(stemmed_sent)
         y = np.array(stemmed_sent)
-        df = pandas.DataFrame({"No.": (1 + i for i in range(x)), "Kalimat": y})
+        df = pandas.DataFrame({"No.": (i for i in range(x)), "Kalimat": y})
         style = df.style.hide_index()
         st.write(
             """Langkah keenam adalah proses menghilangkan imbuhan pada kata dengan proses Stemming. Berikut adalah hasil kalimat yang telah di proses:""",
@@ -208,66 +207,92 @@ def procexsum(rawtext, panjang):
         """
             % stmtime
         )
-    with st.expander("7. Mengubah teks agar dapat di proses"):
-        tokenizer = nltk.RegexpTokenizer(r"\w+")
-        tokenized2 = [tokenizer.tokenize(s.lower()) for s in stemmed_sent]
-        mylist = []
-        for tokendua in tokenized2:
-            for tokenkedua in tokendua:
-                tokke = tokenkedua
-                mylist.append(tokke)
-        mylist
+    with st.expander("7. Teks di proses menggunakan metode TF-IDF"):
+        st.write(
+            """
+        Pada proses ini teks diubah menjadi angka serta dihitung bobot nya menggunakan metode TF-IDF. Berikut adalah hasil bobot kalimat yang telah dihitung:
+        """
+        )
 
-        st.dataframe(data=documents)
-        st.dataframe(data=mylist)
+        df = pandas.DataFrame(
+            document.todense().T,
+            index=vec.get_feature_names(),
+            columns=[f"Kalimat Ke - {i}" for i in range(len(sentence))],
+        )
+
+        st.dataframe(df)
 
         st.write(
-            """Token anda digabungkan pada proses diatas selama %2f detik.
+            """Token anda dihitung bobot nya pada proses diatas selama %2f detik.
         """
             % vkttime
         )
 
-    st.success("Thats how its done! now you know how it works, congratulations!")
+    with st.expander(
+        "8. Pemrosesan banyaknya kalimat yang akan di gunakan sebagai ringkasan"
+    ):
+        st.write(
+            """
+        Dibawah ini merupakan banyaknya kalimat yang akan digunakan sebagai ringkasan, yang telah anda pilih saat meringkas:
+        """
+        )
+        st.slider(
+            label="",
+            min_value=1,
+            max_value=3,
+            value=panjang,
+            on_change=None,
+            disabled=True,
+        )
 
-    # st.success("""
-    # gelar
-    # perdana
-    # motogp
-    # mandalika
-    # gp
-    # indonesia
-    # red
-    # bull
-    # ktm
-    # miguel
-    # oliveira
-    # minggu
-    # 20
-    # 3
-    # 2022
-    # tempat
-    # yamaha
-    # podium
-    # tiga
-    # menang
-    # pramac
-    # ducati
-    # johann
-    # zarco
-    # pertamina
-    # grand
-    # prix
-    # of
-    # saji
-    # tegang
-    # fabio
-    # quartararo
-    # balap
-    # pole
-    # position
-    # hasil
-    # tahan
-    # posisi
-    # start
+    with st.expander("9. Proses menghitung total bobot kata pada kalimat"):
+        x = len(result)
+        y = np.array(result)
+        df = pandas.DataFrame(
+            {"Kalimat ke-": (i for i in range(x)), "Total Bobot Kalimat": y}
+        )
+        style = df.style.hide_index()
+        st.write(
+            """Langkah kesembilan adalah proses menghitung total bobot seluruh kata yang ada pada kalimat yang nantinya. Berikut adalah hasil kalimat yang telah di proses:""",
+            style.to_html(),
+            unsafe_allow_html=True,
+        )
 
-    # """)
+        x = len(summ_index)
+        y = summ_index
+        df = pandas.DataFrame(
+            {"Kalimat yang dipilih": (1 + i for i in range(x)), "Index Kalimat ke-": y}
+        )
+        style = df.style.hide_index()
+        st.write(
+            """Lalu program akan mengambil kalimat dengan bobot tertinggi sesuai dengan panjang yang telah anda masukkan, yaitu %1f kalimat. Berikut adalah hasil kalimat yang telah di proses:"""
+            % panjang,
+            style.to_html(),
+            unsafe_allow_html=True,
+        )
+
+        st.write(
+            """Kalimat anda dihitung bobotnya pada proses diatas selama %2f detik.
+        """
+            % urttime
+        )
+
+    with st.expander("10. Penggabungan kalimat menjadi sebuah ringkasan"):
+        st.write(
+            """
+        Langkah terakhir karena kalimat dengan bobot terbesar sudah diketahui, maka program akan menggabungkan kalimat tersebut untuk menjadi ringkasan. Berikut adalah hasil kalimat yang telah digabungkan dan dijadikan sebagai ringkasan:
+        """
+        )
+        st.text_area(
+            label="Teks yang sudah diringkas:", height=200, value=ringkasan, key="hiw"
+        )
+
+        st.write(
+            """Keseluruhan proses peringkasan diatas dari awal hingga akhir diproses selama %2f detik.
+        """
+            % jmlhtime
+        )
+
+    st.success(
+        "Seperti itulah cara kerja peringkasan teks dengan menggunakan metode Extractive Summarization (TF-IDF). Selamat! Sekarang anda sudah mengerti bagaimana proses peringkasan teks bekerja."
+    )
