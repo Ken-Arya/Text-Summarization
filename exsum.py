@@ -94,8 +94,8 @@ def procexsum(rawtext, panjang):
 
         summarized = []
         for i in summ_index:
-            summarized.append(sentence[i])
-        ringkasan = "".join(map(str, summarized))
+            summarized.append(sentence[i], end=".\n")
+        ringkasan = "".join(map(str, summarized)) + "."
         rkstime = time.time() - rkstime
         jmlhtime = (
             brs1time

@@ -26,7 +26,7 @@ with col1:
         disabled=False,
         height=200,
     )
-    panjang = st.slider("Pilih panjang ringkasan dalam skala 1-3 :", 1, 3, 1)
+    panjang = st.slider("Pilih panjang ringkasan dalam skala 1-3(Kalimat) :", 1, 3, 1)
     exsummary = st.button("Extractive Summarization (Bahasa Indonesia)")
     absummary = st.button("Abstractive Summarization (English)", disabled=True)
     st.title("Petunjuk Penggunaan:")
