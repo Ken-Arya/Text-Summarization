@@ -23,7 +23,7 @@ Untuk Menggunakan aplikasi diatas, ikuti langkah langkah berikut :
 3. Pilih metode untuk proses peringkasan teks:
 
    - Extractive Summarization (Bahasa Indonesia) digunakan untuk meringkas teks dalam bahasa indonesia.
-   - Abstractive Summarization (English) digunakan untuk meringkas teks dalam bahasa inggris.
+   - Abstractive Summarization (English) digunakan untuk meringkas teks dalam bahasa inggris. <b>(Khusus untuk metode peringakasan teks ini, panjang ringkasan teks tidak digunakan karena program akan membuat ringkasan teks secara otomatis)</b>
 
 4. Tunggu proses peringkasan teks sampai selesai.
 5. Teks yang telah diringkas akan tertampil pada bagian sebelah kanan.

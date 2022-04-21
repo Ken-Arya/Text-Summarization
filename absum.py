@@ -1,65 +1,76 @@
+from lib2to3.pgen2 import token
 import os
+from unicodedata import decimal
 import streamlit as st
 import time
+from tokenizers import Tokenizer
 from transformers import PegasusForConditionalGeneration, PegasusTokenizer
 
 
 def procabsum(rawtext):
-    start_time = time.time()
-    with st.spinner("Please wait, your text is being summarized (1/2)"):
-        tokenizer = PegasusTokenizer.from_pretrained("google/pegasus-xsum")
-
-        model = PegasusForConditionalGeneration.from_pretrained("google/pegasus-xsum")
-
+    with st.spinner("Mohon tunggu, teks anda sedang dalam proses peringkasan"):
+        simpantime = time.time()
+        # menyimpan input text
         text = rawtext
+        simpantime = time.time() - simpantime
 
-    st.text("Teks telah diimport selama %.2f detik" % (time.time() - start_time))
+        siaptime = time.time()
+        # Mempersiapkan package yang akan digunakan
+        # Import tokenizer
+        tokenizer = PegasusTokenizer.from_pretrained("google/pegasus-xsum")
+        # Import model
+        model = PegasusForConditionalGeneration.from_pretrained("google/pegasus-xsum")
+        siaptime = time.time() - siaptime
 
-    start_time = time.time()
-    with st.spinner("Please wait, your text is being Tokenized"):
+        tokentime = time.time()
         # Create tokens - number representation of our text
         tokens = tokenizer(
             text, truncation=True, padding="longest", return_tensors="pt"
         )
+        tokentime = time.time() - tokentime
 
-        # Input tokens
-        tokens
-
-    st.text("Teks telah ditokenisasi selama %.2f detik" % (time.time() - start_time))
-
-    start_time = time.time()
-    with st.spinner("Please wait, your text is being Summarized (2/2)"):
+        summtime = time.time()
         # Summarize
         summary = model.generate(**tokens)
+        summtime = time.time() - summtime
 
-        # Output summary tokens
-        summary[0]
-
-    st.text("Teks telah diringkas selama %.2f detik" % (time.time() - start_time))
-
-    start_time = time.time()
-    with st.spinner("Please wait, your text is being Decoded"):
+        dectime = time.time()
         # Decode summary
         summarized = tokenizer.decode(summary[0])
+        dectime = time.time() - dectime
 
-    st.text("Teks telah dibdecode selama %.2f detik" % (time.time() - start_time))
+        jmlhtime = simpantime + siaptime + tokentime + summtime + dectime
 
     st.text_area(
         label="Teks yang sudah diringkas :",
         height=200,
         value=("".join(map(str, summarized))),
+        key="main",
     )
-    st.success("Done!")
+    st.success("Sukses!")
+    st.text(
+        "Teks anda telah diringkas dengan metode Abstractive selama %.2f detik"
+        % jmlhtime
+    )
 
-    st.title("How it works :")
-    with st.expander("1. Input Text"):
+    # Bagian Penjelasan Cara Kerja
+    st.title("Proses Peringkasan :")
+    with st.expander("1. Teks disimpan untuk di proses"):
         st.text_area(
-            label="Langkah pertama adalah program akan menyimpan teks yang telah anda masukkan ke dalam variabel bernama text. Berikut adalah teks yang anda masukkan :",
+            label="Langkah pertama adalah program akan menyimpan teks yang telah anda masukkan. Berikut adalah teks yang anda masukkan:",
             value=text,
             height=200,
         )
-    st.success("Thats how its done! now you know how it works, congratulations!")
+    with st.expander("2. Mempersiapkan Library Google Pegasus"):
+        st.write(
+            """Langkah kedua adalah program menyiapkan Library Google Pegasus untuk memproses peringkasan teks. Berikut adalah library yang digunakan:
+            
+             - Tokenizer = PegasusTokenizer.from_pretrained("google/pegasus-xsum")
+             
+             - Model     = PegasusForConditionalGeneration.from_pretrained("google/pegasus-xsum")
+             """
+        )
 
-
-def howabsum():
-    st.text("ini how absum")
+    st.success(
+        "Seperti itulah cara kerja peringkasan teks dengan menggunakan metode Abstractive Google Pegasus's Library. Selamat! Sekarang anda sudah mengerti bagaimana proses peringkasan teks bekerja."
+    )

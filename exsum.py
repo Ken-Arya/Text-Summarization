@@ -120,7 +120,7 @@ def procexsum(rawtext, panjang):
     st.title("Proses Peringkasan :")
     with st.expander("1. Teks disimpan untuk di proses"):
         st.text_area(
-            label="Langkah pertama adalah program akan menyimpan teks yang telah anda masukkan ke dalam variabel bernama text. Berikut adalah teks yang anda masukkan :",
+            label="Langkah pertama adalah program akan menyimpan teks yang telah anda masukkan. Berikut adalah teks yang anda masukkan:",
             value=rawtext,
             height=200,
         )
