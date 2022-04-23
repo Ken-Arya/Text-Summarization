@@ -22,8 +22,8 @@ Untuk Menggunakan aplikasi diatas, ikuti langkah langkah berikut :
 
 3. Pilih metode untuk proses peringkasan teks:
 
-   - Extractive Summarization (Bahasa Indonesia) digunakan untuk meringkas teks dalam bahasa indonesia.
-   - Abstractive Summarization (English) digunakan untuk meringkas teks dalam bahasa inggris. <b>(Khusus untuk metode peringakasan teks ini, panjang ringkasan teks tidak digunakan karena program akan membuat ringkasan teks secara otomatis)</b>
+   - Extractive Summarization (Bahasa Indonesia).
+   - Abstractive Summarization (English). <b>(Khusus untuk metode peringakasan teks ini, panjang ringkasan teks tidak digunakan karena program akan membuat ringkasan teks secara otomatis)</b>
 
 4. Tunggu proses peringkasan teks sampai selesai.
 5. Teks yang telah diringkas akan tertampil pada bagian sebelah kanan.
@@ -32,9 +32,10 @@ Untuk Menggunakan aplikasi diatas, ikuti langkah langkah berikut :
 """.strip()
 
 APAITUTEXTSUMMARIZATION = """
-
+Text Summarization atau dapat disebut juga peringkasan teks adalah proses untuk mengambil dan mengekstrak informasi penting dari sebuah teks sehingga menghasilkan teks yang lebih singkat dan mengandung poin-poin penting dari teks sumber (Indriani, 2014).
 """.strip()
 
-PERBEDAANMETODE = """
-
+PERBEDAANMETODE = """Perbedaan Metode Extractive Summarization dan Abstractive Summarization adalah :
+   - Extractive Summarization (Bahasa Indonesia) digunakan untuk meringkas teks dalam bahasa indonesia. Metode ini menghitung bobot setiap kata yang ada pada kalimat, dan mengambil kata tersebut untuk dirangkai menjadi sebuah ringkasan.
+   - Abstractive Summarization (English) digunakan untuk meringkas teks dalam bahasa inggris. Metode ini menghitung bobot setiap kata yang ada pada kalimat dan mengambil kata tersebut untuk dirangkai menjadi sebuah ringkasan, namun hasil ringkasan telah dimofidikasi oleh program dengan makna yang sama, agar hasil teks ringkasan tidak sama dengan teks yang akan diringkas.
 """.strip()

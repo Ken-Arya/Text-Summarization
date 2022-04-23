@@ -18,7 +18,7 @@ nltk.download("punkt")
 
 def procexsum(rawtext, panjang):
 
-    with st.spinner("Mohon tunggu, teks anda sedang dalam proses peringkasan"):
+    with st.spinner("Mohon tunggu, teks sedang dalam proses peringkasan"):
         # Teks dibersihkan :
         #   1. Menghapus Garis baru (new line)
         #   2.Teks dipecah menjadi per kalimat
@@ -112,7 +112,7 @@ def procexsum(rawtext, panjang):
         )
     st.success("Sukses!")
     st.text(
-        "Teks anda telah diringkas dengan metode extractive selama %.2f detik"
+        "Teks telah diringkas dengan metode extractive selama %.2f detik"
         % jmlhtime
     )
 
@@ -120,13 +120,13 @@ def procexsum(rawtext, panjang):
     st.title("Proses Peringkasan :")
     with st.expander("1. Teks disimpan untuk di proses"):
         st.text_area(
-            label="Langkah pertama adalah program akan menyimpan teks yang telah anda masukkan. Berikut adalah teks yang anda masukkan:",
+            label="Langkah pertama adalah program akan menyimpan teks yang telah dimasukkan. Berikut adalah teks yang dimasukkan:",
             value=rawtext,
             height=200,
         )
     with st.expander("2. Teks Dibersihkan (1/2)"):
         st.text_area(
-            label="Langkah kedua adalah teks dibersihkan dengan cara menghilangkan garis baru atau paragraf. Berikut adalah hasil teks anda yang sudah dihilangkan garis baru atau paragraf nya:",
+            label="Langkah kedua adalah teks dibersihkan dengan cara menghilangkan garis baru atau paragraf. Berikut adalah hasil teks yang sudah dihilangkan garis baru atau paragraf nya:",
             value=text,
             height=200,
         )
@@ -135,13 +135,13 @@ def procexsum(rawtext, panjang):
         df = pandas.DataFrame({"No.": (i for i in range(x)), "Kalimat": y})
         style = df.style.hide_index()
         st.write(
-            """Setelah teks di bersihkan, lalu teks dipecah menjadi per kalimat. Berikut adalah hasil teks anda yang sudah dipecah menjadi %i kalimat:"""
+            """Setelah teks di bersihkan, lalu teks dipecah menjadi per kalimat. Berikut adalah hasil teks yang sudah dipecah menjadi %i kalimat:"""
             % x,
             style.to_html(),
             unsafe_allow_html=True,
         )
         st.write(
-            """Teks anda dibersihkan dan diubah menjadi kalimat pada proses diatas selama %2f detik.
+            """Teks dibersihkan dan diubah menjadi kalimat pada proses diatas selama %2f detik.
         """
             % brs1time
         )
@@ -151,12 +151,12 @@ def procexsum(rawtext, panjang):
         df = pandas.DataFrame({"No.": (i for i in range(x)), "Token": y})
         style = df.style.hide_index()
         st.write(
-            """Langkah ketiga adalah kalimat yang sudah dibersihkan dan dipecah, diubah menjadi token token atau per kata dengan cara Tokenisasi serta diubah menjadi huruf kecil. Berikut adalah hasil teks anda yang sudah diubah menjadi token:""",
+            """Langkah ketiga adalah kalimat yang sudah dibersihkan dan dipecah, diubah menjadi token token atau per kata dengan cara Tokenisasi serta diubah menjadi huruf kecil. Berikut adalah hasil teks yang sudah diubah menjadi token:""",
             style.to_html(),
             unsafe_allow_html=True,
         )
         st.write(
-            """Kalimat anda ditokenisasi pada proses diatas selama %2f detik.
+            """Kalimat ditokenisasi pada proses diatas selama %2f detik.
         """
             % tkstime
         )
@@ -172,7 +172,7 @@ def procexsum(rawtext, panjang):
             unsafe_allow_html=True,
         )
         st.write(
-            """Token anda dibersihkan pada proses diatas selama %2f detik.
+            """Token dibersihkan pada proses diatas selama %2f detik.
         """
             % brs2time
         )
@@ -188,7 +188,7 @@ def procexsum(rawtext, panjang):
             unsafe_allow_html=True,
         )
         st.write(
-            """Token anda digabungkan pada proses diatas selama %2f detik.
+            """Token digabungkan pada proses diatas selama %2f detik.
         """
             % gbgtime
         )
@@ -203,7 +203,7 @@ def procexsum(rawtext, panjang):
             unsafe_allow_html=True,
         )
         st.write(
-            """Token anda digabungkan pada proses diatas selama %2f detik.
+            """Token digabungkan pada proses diatas selama %2f detik.
         """
             % stmtime
         )
@@ -223,7 +223,7 @@ def procexsum(rawtext, panjang):
         st.dataframe(df)
 
         st.write(
-            """Token anda dihitung bobot nya pada proses diatas selama %2f detik.
+            """Token dihitung bobot nya pada proses diatas selama %2f detik.
         """
             % vkttime
         )
@@ -233,7 +233,7 @@ def procexsum(rawtext, panjang):
     ):
         st.write(
             """
-        Dibawah ini merupakan banyaknya kalimat yang akan digunakan sebagai ringkasan, yang telah anda pilih saat meringkas:
+        Dibawah ini merupakan banyaknya kalimat yang akan digunakan sebagai ringkasan, yang telah dipilih saat meringkas:
         """
         )
         st.slider(
@@ -265,14 +265,14 @@ def procexsum(rawtext, panjang):
         )
         style = df.style.hide_index()
         st.write(
-            """Lalu program akan mengambil kalimat dengan bobot tertinggi sesuai dengan panjang yang telah anda masukkan, yaitu %1f kalimat. Berikut adalah hasil kalimat yang telah di proses:"""
+            """Lalu program akan mengambil kalimat dengan bobot tertinggi sesuai dengan panjang yang telah dimasukkan, yaitu %1f kalimat. Berikut adalah hasil kalimat yang telah di proses:"""
             % panjang,
             style.to_html(),
             unsafe_allow_html=True,
         )
 
         st.write(
-            """Kalimat anda dihitung bobotnya pada proses diatas selama %2f detik.
+            """Kalimat dihitung bobotnya pada proses diatas selama %2f detik.
         """
             % urttime
         )
