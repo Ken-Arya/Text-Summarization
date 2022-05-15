@@ -17,10 +17,23 @@ def procabsum(rawtext):
 
         siaptime = time.time()
         # Mempersiapkan package yang akan digunakan
-        # Import tokenizer
-        tokenizer = PegasusTokenizer.from_pretrained("google/pegasus-xsum")
-        # Import model
-        model = PegasusForConditionalGeneration.from_pretrained("google/pegasus-xsum")
+
+        # Untuk mendownload model terlebih dahulu
+        # tokenizer = PegasusTokenizer.from_pretrained("google/pegasus-xsum")
+
+        # Untuk menyimpan model yang telah selesai di download secara lokal
+        # tokenizer.save_pretrained("local_pegasus-xsum_tokenizer")
+        
+        # Untuk mendownload model terlebih dahulu
+        # model = PegasusForConditionalGeneration.from_pretrained("google/pegasus-xsum")
+        
+        # Untuk mendownload model yang telah selesai di download secara lokal
+        # model.save_pretrained("local_pegasus-xsum_tokenizer_model")
+
+        # Import tokenizer secara lokal
+        tokenizer = PegasusTokenizer.from_pretrained("local_pegasus-xsum_tokenizer")
+        # Import model secara lokal
+        model = PegasusForConditionalGeneration.from_pretrained("local_pegasus-xsum_tokenizer_model")
         siaptime = time.time() - siaptime
 
         tokentime = time.time()

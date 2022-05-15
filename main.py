@@ -27,8 +27,8 @@ with col1:
         height=200,
     )
     panjang = st.slider("Pilih panjang ringkasan dalam skala 1-3(Kalimat) :", 1, 3, 1)
-    exsummary = st.button("Extractive Summarization (Bahasa Indonesia)")
-    absummary = st.button("Abstractive Summarization (English)", disabled=True)
+    exsummary = st.button("Extractive Summarization (Bahasa Indonesia)", disabled = False)
+    absummary = st.button("Abstractive Summarization (English)", disabled = False)
     st.title("Petunjuk Penggunaan:")
     with st.expander("Baca petunjuk penggunaan!", expanded=False):
         st.markdown(meta.PETUNJUKPENGGUNAAN, unsafe_allow_html=True)

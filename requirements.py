@@ -1,0 +1,10 @@
+streamlit
+transformers
+numpy
+nltk
+Sastrawi
+sklearn
+sentencepiece
+torch
+torchvision
+torchaudio
