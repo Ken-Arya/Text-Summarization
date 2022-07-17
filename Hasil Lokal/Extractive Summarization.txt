@@ -1,0 +1,28 @@
+TEXT SUMMARIZATION EXTRACTIVE SUMMARIZATION ( 14 Juni 2022 | 17:30 ) Laptop/Lokal
+
+Teks Sumber :
+Kasus harian Covid-19 kembali mengalami kenaikan. Kementerian Kesehatan mencatat 930 kasus baru pada Selasa (14/6). Jumlah ini lebih banyak 339 kasus dari sebelumnya.
+Provinsi yang paling banyak menyumbang pertambahan kasus adalah DKI Jakarta, yaitu 517 kasus baru.
+
+Pada urutan kedua ditempati Jawa Barat dengan 162 kasus. Lalu, ada Banten 109 kasus dan Jawa Timur 57 kasus. Di luar itu, 30 provinsi lainnya didapati penambahan kasus di bawah 50.
+
+Sementara untuk kesembuhan, Kemenkes mencatat ada 548 kasus baru. Pasien sembuh terbanyak ditemukan di DKI Jakarta dengan 190 kasus. Lalu di Banten 70 kasus dan Jawa Barat 62 kasus. Sisanya, di bawah 50 kasus.
+
+Kemenkes juga mencatat ada 10 kasus kematian baru hari ini. Kematian terbanyak ditemukan di Lampung, yakni 3 kasus. Lalu ada Jawa Timur 2 kasus, Bali, Sumatera Selatan dan Kalimantan Utara masing-masing 1 kasus.
+
+Diketahui, Menteri Kesehatan Budi Gunadi Sadikin mengatakan Indonesia sudah mengidentifikasi empat kasus mutasi SARS-CoV-2 varian Omicron, yaitu subvarian BA.4 dan BA.5. Dia menyebutkan empat kasus itu dilaporkan pertama kali di Bali.
+
+"Memang sudah ditemukan di Indonesia kemarin di Bali, sudah ada empat orang terkena [subvarian] BA.4 dan BA.5," kata Budi kepada wartawan, Jumat (10/6).
+
+--------------------------------------------------
+
+Jumlah Panjang Ringkasan dalam skala 1-3(kalimat) : 2 (Kalimat)
+
+--------------------------------------------------
+
+Hasil Ringkasan : 
+Diketahui, Menteri Kesehatan Budi Gunadi Sadikin mengatakan Indonesia sudah mengidentifikasi empat kasus mutasi SARS-CoV-2 varian Omicron, yaitu subvarian BA. "Memang sudah ditemukan di Indonesia kemarin di Bali, sudah ada empat orang terkena [subvarian] BA.
+
+--------------------------------------------------
+
+Waktu Pemrosesan : 2.86 detik
